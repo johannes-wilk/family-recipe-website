@@ -1,0 +1,65 @@
+---
+const currentPath = Astro.url.pathname;
+---
+
+<header class="bg-white shadow-sm sticky top-0 z-50">
+  <nav class="container mx-auto px-4 py-4">
+    <div class="flex items-center justify-between">
+      <a href="/" class="flex items-center space-x-2">
+        <span class="text-2xl">🍳</span>
+        <h1 class="text-2xl font-bold text-gray-800">Wilks Kochkünste</h1>
+      </a>
+      
+      <div class="hidden md:flex items-center space-x-6">
+        <a 
+          href="/" 
+          class={`hover:text-gray-600 transition-colors ${currentPath === '/' ? 'font-semibold text-gray-900' : 'text-gray-700'}`}
+        >
+          Start
+        </a>
+        <a 
+          href="/rezepte" 
+          class={`hover:text-gray-600 transition-colors ${currentPath.includes('/rezepte') ? 'font-semibold text-gray-900' : 'text-gray-700'}`}
+        >
+          Alle Rezepte
+        </a>
+        <a 
+          href="/kochen" 
+          class={`hover:text-gray-600 transition-colors ${currentPath.includes('/kochen') ? 'font-semibold text-gray-900' : 'text-gray-700'}`}
+        >
+          Köche
+        </a>
+        <a 
+          href="/admin" 
+          class="btn-primary text-sm"
+        >
+          Admin
+        </a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button id="mobile-menu-btn" class="md:hidden text-gray-700 p-2">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4 space-y-3">
+      <a href="/" class="block py-2 hover:text-gray-600 transition-colors">Start</a>
+      <a href="/rezepte" class="block py-2 hover:text-gray-600 transition-colors">Alle Rezepte</a>
+      <a href="/kochen" class="block py-2 hover:text-gray-600 transition-colors">Köche</a>
+      <a href="/admin" class="block py-2 btn-primary inline-block">Admin</a>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  
+  mobileMenuBtn?.addEventListener('click', () => {
+    mobileMenu?.classList.toggle('hidden');
+  });
+</script>

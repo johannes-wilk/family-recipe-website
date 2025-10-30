@@ -1,0 +1,191 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { getCollection } from 'astro:content';
+import { contributors } from '../../types';
+
+export async function getStaticPaths() {
+  const recipes = await getCollection('recipes');
+  return recipes.map(recipe => ({
+    params: { slug: recipe.slug },
+    props: { recipe },
+  }));
+}
+
+const { recipe } = Astro.props;
+const { Content } = await recipe.render();
+
+function getAuthorColor(author: string) {
+  const contributor = contributors.find(c => c.name === author);
+  return contributor?.bgColor || 'bg-gray-200';
+}
+
+const authorColor = getAuthorColor(recipe.data.author);
+---
+
+<BaseLayout title={`${recipe.data.title} - Familienküche`} description={recipe.data.description}>
+  <Header />
+  
+  <main class="flex-grow">
+    <!-- Hero Image -->
+    <div class="relative h-96 overflow-hidden">
+      <img 
+        src={recipe.data.image} 
+        alt={recipe.data.title}
+        class="w-full h-full object-cover"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
+        <div class="container mx-auto px-4 pb-8">
+          <div class={`inline-block px-4 py-2 ${authorColor} rounded-full text-sm font-medium mb-4`}>
+            von {recipe.data.author}
+          </div>
+          <h1 class="text-4xl md:text-5xl font-bold text-white">
+            {recipe.data.title}
+          </h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-12">
+      <div class="grid lg:grid-cols-3 gap-12">
+        <!-- Main Content -->
+        <div class="lg:col-span-2">
+          <!-- Description -->
+          <p class="text-xl text-gray-700 mb-8">
+            {recipe.data.description}
+          </p>
+
+          <!-- Meta Information -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+            <div class="bg-white rounded-xl p-4 shadow-sm text-center">
+              <div class="text-2xl mb-2">⏱️</div>
+              <div class="text-sm text-gray-600">Zubereitungszeit</div>
+              <div class="font-bold">{recipe.data.prepTime} Min</div>
+            </div>
+            <div class="bg-white rounded-xl p-4 shadow-sm text-center">
+              <div class="text-2xl mb-2">⚡</div>
+              <div class="text-sm text-gray-600">Schwierigkeit</div>
+              <div class="font-bold">{recipe.data.difficulty}</div>
+            </div>
+            <div class="bg-white rounded-xl p-4 shadow-sm text-center">
+              <div class="text-2xl mb-2">🍽️</div>
+              <div class="text-sm text-gray-600">Portionen</div>
+              <div class="font-bold">{recipe.data.servings}</div>
+            </div>
+            <div class="bg-white rounded-xl p-4 shadow-sm text-center">
+              <div class="text-2xl mb-2">🌍</div>
+              <div class="text-sm text-gray-600">Küche</div>
+              <div class="font-bold">{recipe.data.cuisine}</div>
+            </div>
+          </div>
+
+          <!-- Zubereitung Steps -->
+          <section class="mb-12">
+            <h2 class="text-3xl font-bold mb-6">Zubereitung</h2>
+            <ol class="space-y-4">
+              {recipe.data.steps.map((step, index) => (
+                <li class="flex gap-4">
+                  <span class="flex-shrink-0 w-8 h-8 bg-gray-800 text-white rounded-full flex items-center justify-center font-bold">
+                    {index + 1}
+                  </span>
+                  <p class="text-gray-700 pt-1">{step}</p>
+                </li>
+              ))}
+            </ol>
+          </section>
+
+          <!-- Helpful Links -->
+          {recipe.data.links && recipe.data.links.length > 0 && (
+            <section class="mb-12">
+              <h2 class="text-3xl font-bold mb-6">Hilfreiche Links</h2>
+              <ul class="space-y-2">
+                {recipe.data.links.map((link) => (
+                  <li>
+                    <a 
+                      href={link.url} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      class="text-blue-600 hover:text-blue-800 underline"
+                    >
+                      {link.text} →
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          <!-- Comments Section -->
+          <section class="mt-16">
+            <h2 class="text-3xl font-bold mb-6">Kommentare</h2>
+            <div class="bg-white rounded-2xl p-8 shadow-sm">
+              <script src="https://giscus.app/client.js"
+                data-repo="YOUR_GITHUB_USERNAME/YOUR_REPO_NAME"
+                data-repo-id="YOUR_REPO_ID"
+                data-category="Rezept-Kommentare"
+                data-category-id="YOUR_CATEGORY_ID"
+                data-mapping="pathname"
+                data-strict="0"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="bottom"
+                data-theme="light"
+                data-lang="de"
+                crossorigin="anonymous"
+                async>
+              </script>
+              <p class="text-gray-500 text-sm">
+                💡 Kommentare werden über Giscus geladen. Bitte konfiguriere dein GitHub Repository in dieser Datei.
+              </p>
+            </div>
+          </section>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="lg:col-span-1">
+          <!-- Ingredients -->
+          <div class="bg-white rounded-2xl p-6 shadow-md sticky top-24">
+            <h2 class="text-2xl font-bold mb-6">Zutaten</h2>
+            <ul class="space-y-3">
+              {recipe.data.ingredients.map((ingredient) => (
+                <li class="flex items-start gap-3">
+                  <span class="text-green-600 mt-1">✓</span>
+                  <span class="text-gray-700">{ingredient}</span>
+                </li>
+              ))}
+            </ul>
+
+            <!-- Dietary Tags -->
+            <div class="mt-6 pt-6 border-t border-gray-200">
+              <div class="flex flex-wrap gap-2">
+                {recipe.data.vegan && (
+                  <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">
+                    🌱 Vegan
+                  </span>
+                )}
+                {recipe.data.vegetarian && !recipe.data.vegan && (
+                  <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">
+                    🥗 Vegetarisch
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Back Navigation -->
+    <div class="container mx-auto px-4 pb-12">
+      <a href="/rezepte" class="inline-flex items-center text-gray-600 hover:text-gray-900 transition-colors">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+        </svg>
+        Zurück zu allen Rezepten
+      </a>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>

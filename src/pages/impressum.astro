@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout title="Impressum & Datenschutz - Familienküche">
+  <Header />
+  
+  <main class="flex-grow">
+    <div class="container mx-auto px-4 py-16 max-w-4xl">
+      <h1 class="text-4xl font-bold mb-8">Impressum & Datenschutz</h1>
+      
+      <section class="bg-white rounded-2xl p-8 mb-8 shadow-sm">
+        <h2 class="text-2xl font-bold mb-4">Über diese Website</h2>
+        <p class="text-gray-700 mb-4">
+          Dies ist eine private Familienwebsite zum Teilen von Rezepten unter Familienmitgliedern und Freunden.
+        </p>
+        <p class="text-gray-700">
+          Die Website wird betrieben von der Familie [Ihr Nachname] und dient ausschließlich privaten, nicht-kommerziellen Zwecken.
+        </p>
+      </section>
+
+      <section class="bg-white rounded-2xl p-8 mb-8 shadow-sm">
+        <h2 class="text-2xl font-bold mb-4">Kontakt</h2>
+        <p class="text-gray-700">
+          E-Mail: <a href="mailto:familie@beispiel.de" class="text-blue-600 hover:underline">familie@beispiel.de</a>
+        </p>
+      </section>
+
+      <section class="bg-white rounded-2xl p-8 mb-8 shadow-sm">
+        <h2 class="text-2xl font-bold mb-4">Datenschutz</h2>
+        
+        <h3 class="text-xl font-semibold mb-3 mt-6">Hosting</h3>
+        <p class="text-gray-700 mb-4">
+          Diese Website wird auf Netlify gehostet. Weitere Informationen zur Datenverarbeitung durch Netlify finden Sie in der 
+          <a href="https://www.netlify.com/privacy/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">
+            Datenschutzerklärung von Netlify
+          </a>.
+        </p>
+
+        <h3 class="text-xl font-semibold mb-3 mt-6">Kommentare (Giscus)</h3>
+        <p class="text-gray-700 mb-4">
+          Für die Kommentarfunktion nutzen wir Giscus, das auf GitHub Discussions basiert. Wenn Sie einen Kommentar hinterlassen, 
+          werden Ihre Daten gemäß der 
+          <a href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">
+            Datenschutzerklärung von GitHub
+          </a> verarbeitet.
+        </p>
+
+        <h3 class="text-xl font-semibold mb-3 mt-6">Cookies</h3>
+        <p class="text-gray-700 mb-4">
+          Diese Website verwendet keine eigenen Cookies. Externe Dienste wie Netlify oder GitHub (für Kommentare) können 
+          eigene Cookies setzen.
+        </p>
+
+        <h3 class="text-xl font-semibold mb-3 mt-6">Rezept-Upload</h3>
+        <p class="text-gray-700 mb-4">
+          Das Hochladen von Rezepten ist passwortgeschützt und nur für autorisierte Familienmitglieder möglich. 
+          Hochgeladene Bilder und Inhalte werden auf Netlify gespeichert.
+        </p>
+
+        <h3 class="text-xl font-semibold mb-3 mt-6">Ihre Rechte</h3>
+        <p class="text-gray-700">
+          Sie haben das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung Ihrer personenbezogenen Daten. 
+          Bitte kontaktieren Sie uns unter der oben angegebenen E-Mail-Adresse.
+        </p>
+      </section>
+
+      <section class="bg-white rounded-2xl p-8 shadow-sm">
+        <h2 class="text-2xl font-bold mb-4">Haftungsausschluss</h2>
+        <p class="text-gray-700 mb-4">
+          Die Rezepte auf dieser Website werden von Privatpersonen erstellt und geteilt. Wir übernehmen keine Haftung für 
+          die Richtigkeit, Vollständigkeit oder Qualität der bereitgestellten Rezepte.
+        </p>
+        <p class="text-gray-700">
+          Externe Links führen zu Websites Dritter. Wir haben keinen Einfluss auf deren Inhalte und übernehmen dafür 
+          keine Verantwortung.
+        </p>
+      </section>
+
+      <div class="text-center mt-12">
+        <a href="/" class="btn-primary">
+          Zurück zur Startseite
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>

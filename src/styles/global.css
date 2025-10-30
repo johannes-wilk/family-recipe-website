@@ -1,0 +1,38 @@
+/* Google Fonts Import */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Inter', sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+  }
+  
+  body {
+    @apply bg-gray-50 text-gray-900;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-6 py-3 bg-gray-800 text-white rounded-full hover:bg-gray-700 transition-colors duration-200 font-medium;
+  }
+  
+  .btn-secondary {
+    @apply px-6 py-3 bg-white text-gray-800 border-2 border-gray-300 rounded-full hover:border-gray-400 transition-colors duration-200 font-medium;
+  }
+  
+  .card {
+    @apply bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden;
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:border-gray-500 transition-colors duration-200;
+  }
+}

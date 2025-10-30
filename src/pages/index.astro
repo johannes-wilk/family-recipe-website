@@ -1,0 +1,130 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import SearchBar from '../components/SearchBar.astro';
+import RecipeCard from '../components/RecipeCard.astro';
+import { getCollection } from 'astro:content';
+import { contributors } from '../types';
+
+const allRecipes = await getCollection('recipes');
+const sortedRecipes = allRecipes.sort((a, b) => 
+  b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
+);
+
+// Get latest recipes for highlights
+const latestRecipes = sortedRecipes.slice(0, 3);
+
+function getAuthorColor(author: string) {
+  const contributor = contributors.find(c => c.name === author);
+  return contributor?.bgColor || 'bg-gray-200';
+}
+---
+
+<BaseLayout title="Familienküche - Unsere besten Rezepte">
+  <Header />
+  
+  <main class="flex-grow">
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-pastel-green via-mustard to-terracotta py-16 md:py-24">
+      <div class="container mx-auto px-4 text-center">
+        <h1 class="text-4xl md:text-6xl font-bold text-gray-800 mb-4">
+          Willkommen in unserer Familienküche
+        </h1>
+        <p class="text-xl md:text-2xl text-gray-700 mb-8 max-w-2xl mx-auto">
+          Die besten Rezepte aus unserer Familie - von Generation zu Generation weitergegeben und ständig erweitert.
+        </p>
+        <a href="/rezepte" class="btn-primary text-lg">
+          Alle Rezepte entdecken
+        </a>
+      </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="container mx-auto px-4 py-12 -mt-8">
+      <SearchBar />
+    </section>
+
+    <!-- Latest Recipes -->
+    <section class="container mx-auto px-4 py-12">
+      <h2 class="text-3xl font-bold mb-8">Neueste Rezepte</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="recipe-grid">
+        {latestRecipes.map((recipe) => (
+          <RecipeCard 
+            recipe={{
+              ...recipe.data,
+              slug: recipe.slug
+            }}
+            authorColor={getAuthorColor(recipe.data.author)}
+          />
+        ))}
+      </div>
+    </section>
+
+    <!-- Contributors Section -->
+    <section class="bg-white py-16">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold mb-8 text-center">Unsere Köche</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {contributors.map((contributor) => {
+            const contributorRecipes = allRecipes.filter(r => r.data.author === contributor.name);
+            return (
+              <a 
+                href={`/kochen#${contributor.name.toLowerCase()}`}
+                class={`${contributor.bgColor} rounded-2xl p-6 text-center hover:shadow-xl transition-shadow duration-300`}
+              >
+                <div class="text-5xl mb-3">👨‍🍳</div>
+                <h3 class="text-2xl font-bold mb-2">{contributor.name}</h3>
+                <p class="text-gray-700">{contributorRecipes.length} Rezepte</p>
+              </a>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="bg-gray-800 text-white py-16">
+      <div class="container mx-auto px-4 text-center">
+        <h2 class="text-3xl font-bold mb-4">Hast du ein tolles Rezept?</h2>
+        <p class="text-xl mb-8 text-gray-300">
+          Als Familienmitglied kannst du deine eigenen Rezepte hinzufügen und mit allen teilen.
+        </p>
+        <a href="/admin" class="btn-primary bg-white text-gray-800 hover:bg-gray-100">
+          Rezept hinzufügen
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+
+  <script>
+    // Simple client-side search and filter
+    const searchInput = document.getElementById('search-input') as HTMLInputElement;
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const recipeGrid = document.getElementById('recipe-grid');
+    
+    let currentFilter = 'all';
+    
+    // Filter button clicks
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.getAttribute('data-filter') || 'all';
+        // In a full implementation, this would filter the recipes
+        console.log('Filter:', currentFilter);
+      });
+    });
+
+    // Search input
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        const searchTerm = (e.target as HTMLInputElement).value.toLowerCase();
+        console.log('Search:', searchTerm);
+        // In a full implementation, this would filter the recipes
+      });
+    }
+  </script>
+</BaseLayout>

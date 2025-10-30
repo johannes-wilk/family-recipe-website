@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import RecipeCard from '../components/RecipeCard.astro';
+import { getCollection } from 'astro:content';
+import { contributors } from '../types';
+
+const allRecipes = await getCollection('recipes');
+
+function getAuthorColor(author: string) {
+  const contributor = contributors.find(c => c.name === author);
+  return contributor?.bgColor || 'bg-gray-200';
+}
+---
+
+<BaseLayout title="Unsere Köche - Familienküche">
+  <Header />
+  
+  <main class="flex-grow">
+    <!-- Page Header -->
+    <section class="bg-gradient-to-r from-terracotta to-mustard py-16">
+      <div class="container mx-auto px-4 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+          Unsere Köche
+        </h1>
+        <p class="text-xl text-gray-700">
+          Jeder bringt seinen eigenen Stil in die Familienküche
+        </p>
+      </div>
+    </section>
+
+    <!-- Contributors Sections -->
+    <div class="container mx-auto px-4 py-16">
+      {contributors.map((contributor) => {
+        const contributorRecipes = allRecipes.filter(r => r.data.author === contributor.name);
+        
+        return (
+          <section id={contributor.name.toLowerCase()} class="mb-20 scroll-mt-24">
+            <!-- Contributor Header -->
+            <div class={`${contributor.bgColor} rounded-3xl p-8 md:p-12 mb-8`}>
+              <div class="flex flex-col md:flex-row items-center gap-6">
+                <div class="text-8xl">👨‍🍳</div>
+                <div class="text-center md:text-left">
+                  <h2 class="text-4xl font-bold mb-2">{contributor.name}</h2>
+                  <p class="text-xl text-gray-700">
+                    {contributorRecipes.length} {contributorRecipes.length === 1 ? 'Rezept' : 'Rezepte'}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Contributor's Recipes -->
+            {contributorRecipes.length > 0 ? (
+              <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {contributorRecipes.map((recipe) => (
+                  <RecipeCard 
+                    recipe={{
+                      ...recipe.data,
+                      slug: recipe.slug
+                    }}
+                    authorColor={contributor.bgColor}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div class="text-center py-12 bg-white rounded-2xl">
+                <div class="text-4xl mb-4">📝</div>
+                <p class="text-gray-600">
+                  {contributor.name} hat noch keine Rezepte hochgeladen.
+                </p>
+              </div>
+            )}
+          </section>
+        );
+      })}
+    </div>
+
+    <!-- Quick Navigation -->
+    <div class="sticky bottom-8 container mx-auto px-4">
+      <div class="bg-white rounded-full shadow-xl p-4 flex justify-center gap-4 max-w-md mx-auto">
+        {contributors.map((contributor) => (
+          <a 
+            href={`#${contributor.name.toLowerCase()}`}
+            class={`w-12 h-12 ${contributor.bgColor} rounded-full flex items-center justify-center font-bold hover:scale-110 transition-transform`}
+            title={contributor.name}
+          >
+            {contributor.name.charAt(0)}
+          </a>
+        ))}
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>

@@ -1,0 +1,31 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/images/recipes"
+public_folder: "/images/recipes"
+
+collections:
+  - name: "recipes"
+    label: "Rezepte"
+    folder: "src/content/recipes"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Titel", name: "title", widget: "string" }
+      - { label: "Beschreibung", name: "description", widget: "text" }
+      - { label: "Bild", name: "image", widget: "image" }
+      - { label: "Autor", name: "author", widget: "select", options: ["Max", "Paul", "Jonas", "Lukas"] }
+      - { label: "Cuisine", name: "cuisine", widget: "select", options: ["Italienisch", "Deutsch", "Asiatisch", "Mediterran", "Amerikanisch", "Vegetarisch", "Vegan"] }
+      - { label: "Schwierigkeitsgrad", name: "difficulty", widget: "select", options: ["Einfach", "Mittel", "Schwer"] }
+      - { label: "Zubereitungszeit (Min)", name: "prepTime", widget: "number" }
+      - { label: "Portionen", name: "servings", widget: "number", default: 4 }
+      - { label: "Vegetarisch", name: "vegetarian", widget: "boolean", required: false }
+      - { label: "Vegan", name: "vegan", widget: "boolean", required: false }
+      - { label: "Zutaten", name: "ingredients", widget: "list" }
+      - { label: "Zubereitung", name: "steps", widget: "list" }
+      - { label: "Hilfreiche Links", name: "links", widget: "list", required: false, fields: [
+          { label: "Text", name: "text", widget: "string" },
+          { label: "URL", name: "url", widget: "string" }
+        ]}
+      - { label: "Veröffentlichungsdatum", name: "publishDate", widget: "datetime" }
