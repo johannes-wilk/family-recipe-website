@@ -25,7 +25,7 @@ const { title = 'Familienküche', description = 'Unsere besten Rezepte' } = Astr
       if (window.netlifyIdentity) {
         window.netlifyIdentity.on("init", user => {
           if (!user) {
-            window.netlifyIdentity.on("login", () => {
+            window.netlifyIdentity?.on("login", () => {
               document.location.href = "/admin/";
             });
           }
