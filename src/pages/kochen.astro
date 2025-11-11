@@ -57,6 +57,7 @@ function getAuthorColor(author: string) {
                   <RecipeCard 
                     recipe={{
                       ...recipe.data,
+                      publishDate: recipe.data.publishDate.toISOString(),
                       slug: recipe.slug
                     }}
                     authorColor={contributor.bgColor}
