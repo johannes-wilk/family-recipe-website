@@ -119,12 +119,13 @@ const authorColor = getAuthorColor(recipe.data.author);
           <!-- Comments Section -->
           <section class="mt-16">
             <h2 class="text-3xl font-bold mb-6">Kommentare</h2>
-            <div class="bg-white rounded-2xl p-8 shadow-sm">
-              <script src="https://giscus.app/client.js"
-                data-repo="YOUR_GITHUB_USERNAME/YOUR_REPO_NAME"
-                data-repo-id="YOUR_REPO_ID"
+            <div class="bg-white rounded-2xl p-8 shadow-sm" id="comments-section">
+              <script 
+                src="https://giscus.app/client.js"
+                data-repo="johannes-wilk/family-recipe-website"
+                data-repo-id=""
                 data-category="Rezept-Kommentare"
-                data-category-id="YOUR_CATEGORY_ID"
+                data-category-id=""
                 data-mapping="pathname"
                 data-strict="0"
                 data-reactions-enabled="1"
@@ -135,9 +136,11 @@ const authorColor = getAuthorColor(recipe.data.author);
                 crossorigin="anonymous"
                 async>
               </script>
-              <p class="text-gray-500 text-sm">
-                💡 Kommentare werden über Giscus geladen. Bitte konfiguriere dein GitHub Repository in dieser Datei.
-              </p>
+              <noscript>
+                <p class="text-gray-500 text-center py-4">
+                  Bitte aktiviere JavaScript, um Kommentare zu sehen.
+                </p>
+              </noscript>
             </div>
           </section>
         </div>

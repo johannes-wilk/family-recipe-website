@@ -15,7 +15,7 @@ collections:
       - { label: "Titel", name: "title", widget: "string" }
       - { label: "Beschreibung", name: "description", widget: "text" }
       - { label: "Bild", name: "image", widget: "image" }
-      - { label: "Autor", name: "author", widget: "select", options: ["Max", "Paul", "Jonas", "Lukas"] }
+      - { label: "Autor", name: "author", widget: "select", options: ["Max", "Hansi", "Flori", "Beni"] }
       - { label: "Cuisine", name: "cuisine", widget: "select", options: ["Italienisch", "Deutsch", "Asiatisch", "Mediterran", "Amerikanisch", "Vegetarisch", "Vegan"] }
       - { label: "Schwierigkeitsgrad", name: "difficulty", widget: "select", options: ["Einfach", "Mittel", "Schwer"] }
       - { label: "Zubereitungszeit (Min)", name: "prepTime", widget: "number" }
