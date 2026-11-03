@@ -10,9 +10,3 @@
   from = "/admin"
   to = "/admin/index.html"
   status = 200
-
-# SPA fallback (optional, for client-side routing)
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200

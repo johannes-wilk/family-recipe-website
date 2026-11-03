@@ -119,17 +119,14 @@ npm run preview
    - Build-Einstellungen werden automatisch erkannt (`netlify.toml`)
    - Klicke auf "Deploy site"
 
-3. **Netlify Identity aktivieren**
-   - Gehe zu Site Settings → Identity
-   - Klicke auf "Enable Identity"
-   - Gehe zu Settings → Registration preferences
-   - Wähle "Invite only"
-   - Gehe zu "Services" → "Git Gateway" und aktiviere es
+3. **GitHub OAuth für den Admin-Bereich einrichten**
+   - Folge der Anleitung in `GITHUB_OAUTH_SETUP.md`
+   - Erstelle eine GitHub OAuth App (Client ID + Secret)
+   - Trage die Credentials in Netlify ein: Site Settings → Access control → OAuth → Install provider → GitHub
 
-4. **Admin-Benutzer einladen**
-   - Gehe zu Identity → "Invite users"
-   - Gib E-Mail-Adressen deiner Familienmitglieder ein
-   - Sie erhalten Einladungs-E-Mails mit Zugangslinks
+4. **Admin-Zugriff für Familienmitglieder**
+   - Füge Familienmitglieder als Collaborators in deinem GitHub-Repository hinzu (Settings → Collaborators)
+   - Sie melden sich dann über `/admin` mit ihrem GitHub-Account an
 
 ### Methode 2: Manuelles Deployment
 

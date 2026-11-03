@@ -12,9 +12,6 @@ const sortedRecipes = allRecipes.sort((a, b) =>
   b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
 );
 
-// Get latest recipes for highlights
-const latestRecipes = sortedRecipes.slice(0, 3);
-
 function getAuthorColor(author: string) {
   const contributor = contributors.find(c => c.name === author);
   return contributor?.bgColor || 'bg-gray-200';
@@ -45,20 +42,40 @@ function getAuthorColor(author: string) {
       <SearchBar />
     </section>
 
-    <!-- Latest Recipes -->
+    <!-- All Recipes with Search & Filter -->
     <section class="container mx-auto px-4 py-12">
-      <h2 class="text-3xl font-bold mb-8">Neueste Rezepte</h2>
+      <h2 class="text-3xl font-bold mb-8">Alle Rezepte</h2>
+      <div id="recipe-count" class="text-gray-600 mb-6">
+        <span id="visible-count">{sortedRecipes.length}</span> von {sortedRecipes.length} Rezepten
+      </div>
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="recipe-grid">
-        {latestRecipes.map((recipe) => (
-          <RecipeCard 
-            recipe={{
-              ...recipe.data,
-              publishDate: recipe.data.publishDate.toISOString(),
-              slug: recipe.slug
-            }}
-            authorColor={getAuthorColor(recipe.data.author)}
-          />
+        {sortedRecipes.map((recipe) => (
+          <div
+            class="recipe-item"
+            data-title={recipe.data.title.toLowerCase()}
+            data-cuisine={recipe.data.cuisine.toLowerCase()}
+            data-difficulty={recipe.data.difficulty.toLowerCase()}
+            data-preptime={recipe.data.prepTime}
+            data-vegetarian={recipe.data.vegetarian ? 'true' : 'false'}
+            data-vegan={recipe.data.vegan ? 'true' : 'false'}
+            data-ingredients={recipe.data.ingredients.join(' ').toLowerCase()}
+          >
+            <RecipeCard 
+              recipe={{
+                ...recipe.data,
+                publishDate: recipe.data.publishDate.toISOString(),
+                slug: recipe.slug
+              }}
+              authorColor={getAuthorColor(recipe.data.author)}
+            />
+          </div>
         ))}
+      </div>
+
+      <div id="no-results" class="hidden text-center py-16">
+        <div class="text-6xl mb-4">🔍</div>
+        <h3 class="text-2xl font-bold mb-2">Keine Rezepte gefunden</h3>
+        <p class="text-gray-600">Versuche es mit anderen Suchbegriffen oder Filtern.</p>
       </div>
     </section>
 
@@ -101,30 +118,83 @@ function getAuthorColor(author: string) {
   <Footer />
 
   <script>
-    // Simple client-side search and filter
     const searchInput = document.getElementById('search-input') as HTMLInputElement;
     const filterBtns = document.querySelectorAll('.filter-btn');
-    const recipeGrid = document.getElementById('recipe-grid');
+    const recipeItems = document.querySelectorAll('.recipe-item') as NodeListOf<HTMLElement>;
+    const noResults = document.getElementById('no-results');
+    const visibleCount = document.getElementById('visible-count');
     
     let currentFilter = 'all';
-    
-    // Filter button clicks
+    let currentSearch = '';
+
+    function filterRecipes() {
+      let visibleRecipes = 0;
+
+      recipeItems.forEach(item => {
+        const title = item.dataset.title || '';
+        const cuisine = item.dataset.cuisine || '';
+        const difficulty = item.dataset.difficulty || '';
+        const ingredients = item.dataset.ingredients || '';
+        const prepTime = parseInt(item.dataset.preptime || '0');
+        const isVegetarian = item.dataset.vegetarian === 'true';
+        const isVegan = item.dataset.vegan === 'true';
+
+        // Check search
+        const searchMatch = !currentSearch || 
+          title.includes(currentSearch) || 
+          cuisine.includes(currentSearch) || 
+          ingredients.includes(currentSearch);
+
+        // Check filter
+        let filterMatch = true;
+        if (currentFilter === 'vegetarisch') {
+          filterMatch = isVegetarian;
+        } else if (currentFilter === 'vegan') {
+          filterMatch = isVegan;
+        } else if (currentFilter === 'schnell') {
+          filterMatch = prepTime < 30;
+        } else if (currentFilter === 'einfach') {
+          filterMatch = difficulty === 'einfach';
+        }
+
+        // Show/hide recipe
+        if (searchMatch && filterMatch) {
+          item.style.display = 'block';
+          visibleRecipes++;
+        } else {
+          item.style.display = 'none';
+        }
+      });
+
+      // Update count and show/hide no results
+      if (visibleCount) {
+        visibleCount.textContent = visibleRecipes.toString();
+      }
+      
+      if (noResults) {
+        if (visibleRecipes === 0) {
+          noResults.classList.remove('hidden');
+        } else {
+          noResults.classList.add('hidden');
+        }
+      }
+    }
+
+    // Filter buttons
     filterBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         filterBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         currentFilter = btn.getAttribute('data-filter') || 'all';
-        // In a full implementation, this would filter the recipes
-        console.log('Filter:', currentFilter);
+        filterRecipes();
       });
     });
 
     // Search input
     if (searchInput) {
       searchInput.addEventListener('input', (e) => {
-        const searchTerm = (e.target as HTMLInputElement).value.toLowerCase();
-        console.log('Search:', searchTerm);
-        // In a full implementation, this would filter the recipes
+        currentSearch = (e.target as HTMLInputElement).value.toLowerCase();
+        filterRecipes();
       });
     }
   </script>

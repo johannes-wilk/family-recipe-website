@@ -2,7 +2,7 @@
 title: "Wiener Kaiserschmarrn"
 description: "Klassisches Wiener Kaiserschmarrn Rezept abgesegnet von Niklas."
 image: "/images/recipes/kaiserschmarrn.jpg"
-author: "Johannes"
+author: "Beni"
 cuisine: "Österreichisch"
 difficulty: "Einfach"
 prepTime: 20
@@ -16,7 +16,7 @@ ingredients:
   - 60 g Zucker
   - 80 g Rosinen (nach Belieben)
   - 30 g Butter
-  - Puderzucker (zum Bestäuben)"400g Spaghetti"
+  - Puderzucker (zum Bestäuben)
   - Apfelmus oder Preiselbeeren zum garnieren
 steps:
   - Eiweiß vom Eigelb trennen.
@@ -32,8 +32,5 @@ steps:
   - Wenn beide Seiten goldbraun sind, den Schmarrn mit zwei Pfannenwendern in Stücke reißen.
   - Kurz weiterbraten, damit alles rundum leicht karamellisiert.
   - Auf Tellern anrichten und großzügig mit Puderzucker bestäuben.
-links:
-  - text: ""
-    url: ""
 publishDate: 2024-01-15T10:00:00.000Z
 ---

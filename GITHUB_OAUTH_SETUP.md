@@ -118,13 +118,13 @@ Die Konfiguration ist bereits korrekt eingestellt in `public/admin/config.yml`:
 backend:
   name: github
   repo: johannes-wilk/family-recipe-website
-  branch: main
+  branch: master
 ```
 
 **Erklärung:**
 - `name: github` - Nutzt GitHub OAuth Backend
 - `repo: johannes-wilk/family-recipe-website` - Dein Repository
-- `branch: main` - Der Branch für Commits
+- `branch: master` - Der Branch für Commits
 
 ---
 

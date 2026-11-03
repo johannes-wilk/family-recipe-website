@@ -2,7 +2,7 @@
 title: "Omas Apfelkuchen"
 description: "Traditioneller deutscher Apfelkuchen mit Zimtstreuseln und saftigem Rührteig."
 image: "/images/recipes/apfelkuchen.jpg"
-author: "Jonas"
+author: "Flori"
 cuisine: "Deutsch"
 difficulty: "Einfach"
 prepTime: 20

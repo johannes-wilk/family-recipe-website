@@ -22,6 +22,15 @@ function getAuthorColor(author: string) {
 }
 
 const authorColor = getAuthorColor(recipe.data.author);
+
+// Giscus configuration
+// To enable comments: enable "Discussions" in the GitHub repo, then get the
+// IDs from https://giscus.app and fill in giscusRepoId + giscusCategoryId.
+const giscusRepo = 'johannes-wilk/family-recipe-website';
+const giscusRepoId = '';           // TODO: e.g. "R_kgDO..."
+const giscusCategory = 'Rezept-Kommentare';
+const giscusCategoryId = '';       // TODO: e.g. "DIC_kwDO..."
+const giscusEnabled = Boolean(giscusRepoId && giscusCategoryId);
 ---
 
 <BaseLayout title={`${recipe.data.title} - Familienküche`} description={recipe.data.description}>
@@ -33,6 +42,7 @@ const authorColor = getAuthorColor(recipe.data.author);
       <img 
         src={recipe.data.image} 
         alt={recipe.data.title}
+        onerror="this.onerror=null; this.src='/images/recipes/placeholder.svg';"
         class="w-full h-full object-cover"
       />
       <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
@@ -120,27 +130,36 @@ const authorColor = getAuthorColor(recipe.data.author);
           <section class="mt-16">
             <h2 class="text-3xl font-bold mb-6">Kommentare</h2>
             <div class="bg-white rounded-2xl p-8 shadow-sm" id="comments-section">
-              <script 
-                src="https://giscus.app/client.js"
-                data-repo="johannes-wilk/family-recipe-website"
-                data-repo-id=""
-                data-category="Rezept-Kommentare"
-                data-category-id=""
-                data-mapping="pathname"
-                data-strict="0"
-                data-reactions-enabled="1"
-                data-emit-metadata="0"
-                data-input-position="bottom"
-                data-theme="light"
-                data-lang="de"
-                crossorigin="anonymous"
-                async>
-              </script>
-              <noscript>
+              {giscusEnabled ? (
+                <>
+                  <script 
+                    is:inline
+                    src="https://giscus.app/client.js"
+                    data-repo={giscusRepo}
+                    data-repo-id={giscusRepoId}
+                    data-category={giscusCategory}
+                    data-category-id={giscusCategoryId}
+                    data-mapping="pathname"
+                    data-strict="0"
+                    data-reactions-enabled="1"
+                    data-emit-metadata="0"
+                    data-input-position="bottom"
+                    data-theme="light"
+                    data-lang="de"
+                    crossorigin="anonymous"
+                    async>
+                  </script>
+                  <noscript>
+                    <p class="text-gray-500 text-center py-4">
+                      Bitte aktiviere JavaScript, um Kommentare zu sehen.
+                    </p>
+                  </noscript>
+                </>
+              ) : (
                 <p class="text-gray-500 text-center py-4">
-                  Bitte aktiviere JavaScript, um Kommentare zu sehen.
+                  💬 Die Kommentarfunktion wird bald freigeschaltet.
                 </p>
-              </noscript>
+              )}
             </div>
           </section>
         </div>

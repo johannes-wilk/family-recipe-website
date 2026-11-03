@@ -2,7 +2,7 @@
 title: "Thailändisches Gemüse-Curry"
 description: "Cremiges veganes Curry mit Kokosmilch, buntem Gemüse und aromatischen thailändischen Gewürzen."
 image: "/images/recipes/thai-curry.jpg"
-author: "Paul"
+author: "Hansi"
 cuisine: "Asiatisch"
 difficulty: "Mittel"
 prepTime: 35

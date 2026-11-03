@@ -31,10 +31,11 @@ Ein vollständiges, produktionsbereites Rezept-Website-Projekt mit folgenden Kom
 - **public/admin/index.html** - CMS Admin Interface
 
 ### 📝 Content
-- **3 Beispiel-Rezepte** in `src/content/recipes/`:
+- **4 Rezepte** in `src/content/recipes/`:
   - Spaghetti Carbonara (Max)
-  - Thailändisches Gemüse-Curry (Paul)
-  - Omas Apfelkuchen (Jonas)
+  - Thailändisches Gemüse-Curry (Hansi)
+  - Omas Apfelkuchen (Flori)
+  - Wiener Kaiserschmarrn (Beni)
 
 ### 🎨 Design-Features
 - ✅ Pastel-Farbpalette (Grün, Terracotta, Mustard, Dusty Blue)
@@ -135,7 +136,7 @@ npm run build    # Production Build
 - **Gesamtdateien:** 26+ Dateien
 - **Komponenten:** 5
 - **Seiten:** 6
-- **Beispiel-Rezepte:** 3
+- **Rezepte:** 4
 - **Zeilen Code:** ~2000+
 
 ## 🎯 Features-Checkliste
